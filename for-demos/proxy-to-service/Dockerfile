@@ -5,5 +5,5 @@ MAINTAINER Tim Hockin "thockin@google.com"
 RUN opkg-install socat curl bash
 ADD start.sh start.sh
 
-# Usage: docker run -p <host-port>:<port> <this-container> <tcp|udp> <port> <service-name> [timeout]
+# Usage: docker run -p <host-port>:<port> <this-container> <tcp|udp> <port> <service-name> <service-port> [timeout]
 ENTRYPOINT ["/start.sh"]
