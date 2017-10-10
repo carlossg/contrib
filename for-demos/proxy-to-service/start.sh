@@ -15,21 +15,22 @@
 # limitations under the License.
 
 
-# Usage: $0 <protocol> <port> <service> [timeout]
+# Usage: $0 <protocol> <port> <service> <service-port> [timeout]
 #   protocol: tcp|udp - case insensitive
-#   port: port number on which to receive and connect
+#   port: port number on which to receive
 #   service: the destination service name or IP
+#   service-port: port number on which to connect
 #   timeout: idle timeout in seconds (optional)
 
-if [[ -z "$1" -o -z "$2" -o -z "$3" ]]; then
+if [[ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" ]]; then
     echo "usage: $0 <protocol> <port> <service> [timeout]"
     exit 1
 fi
 
 PROTO=$(echo $1 | tr a-z A-Z)
 TIMEOUT=""
-test -n "$4" && TIMEOUT="-T$4"
+test -n "$5" && TIMEOUT="-T$5"
 
-CMD="socat ${TIMEOUT} ${PROTO}-LISTEN:$2,reuseaddr,fork ${PROTO}:$3:$2"
+CMD="socat ${TIMEOUT} ${PROTO}-LISTEN:$2,reuseaddr,fork ${PROTO}:$3:$4"
 echo "Running ${CMD}"
 exec ${CMD}
